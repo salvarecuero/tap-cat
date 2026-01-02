@@ -29,5 +29,102 @@
     "value": 4,
     "price": 300,
     "icon": "/icons/premium_catnip_toy.png"
+  },
+  {
+    "id": "feather_wand_auto",
+    "title": "Feather Wand Auto-Toy",
+    "description": "+2 pets every 2 seconds.",
+    "imageDescription": "A cat teaser wand with soft fluffy feathers, cream handle with dusty blue feather tips, simple playful style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 2,
+    "intervalMs": 2000,
+    "price": 450,
+    "icon": "/icons/feather_wand_auto.png"
+  },
+  {
+    "id": "magic_mittens",
+    "title": "Magic Mittens",
+    "description": "Clicks give x8 pets.",
+    "imageDescription": "A pair of fingerless mittens with sparkle details, warm beige wool with subtle lavender-gray accent, cozy simple style, icon view on transparent background",
+    "type": "clickMultiplier",
+    "value": 8,
+    "price": 700,
+    "icon": "/icons/magic_mittens.png"
+  },
+  {
+    "id": "motorized_mouse",
+    "title": "Motorized Mouse",
+    "description": "+3 pets every 1.5 seconds.",
+    "imageDescription": "A small mechanical toy mouse with visible gears, tan body with soft brown outline and muted teal gear accent, simple cartoon style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 3,
+    "intervalMs": 1500,
+    "price": 1050,
+    "icon": "/icons/motorized_mouse.png"
+  },
+  {
+    "id": "treat_dispenser",
+    "title": "Treat Dispenser",
+    "description": "+5 pets every second.",
+    "imageDescription": "An automatic pet treat dispenser with a hopper, cream colored plastic with soft brown trim and sage green button, simple friendly style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 5,
+    "intervalMs": 1000,
+    "price": 1550,
+    "icon": "/icons/treat_dispenser.png"
+  },
+  {
+    "id": "laser_pointer_bot",
+    "title": "Laser Pointer Bot",
+    "description": "+8 pets every second.",
+    "imageDescription": "A small robotic device with a laser pointer, beige base with soft brown outline and single dusty red laser dot, simple tech toy style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 8,
+    "intervalMs": 1000,
+    "price": 2300,
+    "icon": "/icons/laser_pointer_bot.png"
+  },
+  {
+    "id": "golden_paw_gloves",
+    "title": "Golden Paw Gloves",
+    "description": "Clicks give x12 pets.",
+    "imageDescription": "Luxurious padded gloves with paw print details, warm golden-beige with soft brown paw pad accents, premium cozy style, icon view on transparent background",
+    "type": "clickMultiplier",
+    "value": 12,
+    "price": 3400,
+    "icon": "/icons/golden_paw_gloves.png"
+  },
+  {
+    "id": "robotic_belly_rubber",
+    "title": "Robotic Belly Rubber",
+    "description": "+12 pets every second.",
+    "imageDescription": "A mechanical arm with soft petting attachment, cream colored metal with soft brown joints and muted pink soft pad, friendly robot style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 12,
+    "intervalMs": 1000,
+    "price": 4900,
+    "icon": "/icons/robotic_belly_rubber.png"
+  },
+  {
+    "id": "quantum_catnip_garden",
+    "title": "Quantum Catnip Garden",
+    "description": "+20 pets every second.",
+    "imageDescription": "A small planter with catnip plants, warm tan pot with sage green catnip leaves, simple botanical style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 20,
+    "intervalMs": 1000,
+    "price": 7000,
+    "icon": "/icons/quantum_catnip_garden.png"
+  },
+  {
+    "id": "purrfect_paradise_machine",
+    "title": "Purr-fect Paradise Machine",
+    "description": "+35 pets every 0.5 seconds.",
+    "imageDescription": "An elaborate automated petting machine with multiple arms, beige and cream colored with soft brown mechanical details and one small lavender-gray accent, complex but friendly style, icon view on transparent background",
+    "type": "autoClick",
+    "value": 35,
+    "intervalMs": 500,
+    "price": 10000,
+    "icon": "/icons/purrfect_paradise_machine.png"
   }
 ]
