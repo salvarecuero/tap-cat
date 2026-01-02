@@ -5,6 +5,7 @@ import type { GameState, CatProfile, Boost } from "./types";
 import {
   getActiveStageSpriteKey,
   getPetsPerClick,
+  getPetsPerSecond,
   getAutoClickBoosts,
   canBuyBoost,
   buyBoost as engineBuyBoost,
@@ -56,8 +57,8 @@ export function useGame({ cat, boosts }: UseGameProps) {
   );
 
   const activeSpriteKey = useMemo(
-    () => getActiveStageSpriteKey(cat, state.totalPets),
-    [cat, state.totalPets]
+    () => getActiveStageSpriteKey(cat, state.pets),
+    [cat, state.pets]
   );
 
   const activeSpriteSrc = useMemo(() => {
@@ -68,6 +69,11 @@ export function useGame({ cat, boosts }: UseGameProps) {
   const autoClickBoosts = useMemo(
     () => getAutoClickBoosts(boosts, state.ownedBoosts),
     [boosts, state.ownedBoosts]
+  );
+
+  const petsPerSecond = useMemo(
+    () => getPetsPerSecond(boosts, state.ownedBoosts, petsPerClick),
+    [boosts, state.ownedBoosts, petsPerClick]
   );
 
   // Actions
@@ -100,27 +106,22 @@ export function useGame({ cat, boosts }: UseGameProps) {
     }
   }, []);
 
-  // Auto-click interval
-  // For v1, we assume at most one auto-click boost
-  // Calculate interval based on first auto-click boost
-  const autoClickInterval = autoClickBoosts.length > 0
-    ? autoClickBoosts[0].intervalMs
-    : null;
-
-  const autoClickValue = autoClickBoosts.reduce(
-    (sum, boost) => sum + boost.value,
-    0
-  );
+  // Auto-click interval - update every 500ms
+  // Calculate the proportional amount to add based on pets per second
+  const UPDATE_INTERVAL_MS = 500;
 
   useInterval(() => {
-    if (autoClickValue > 0) {
-      setState((prev) => applyClick(prev, autoClickValue));
+    if (petsPerSecond > 0) {
+      // Add proportional amount for 500ms interval
+      const petsToAdd = (petsPerSecond * UPDATE_INTERVAL_MS) / 1000;
+      setState((prev) => applyClick(prev, petsToAdd));
     }
-  }, autoClickInterval);
+  }, petsPerSecond > 0 ? UPDATE_INTERVAL_MS : null);
 
   return {
     state,
     petsPerClick,
+    petsPerSecond,
     activeSpriteKey,
     activeSpriteSrc,
     tapCat,

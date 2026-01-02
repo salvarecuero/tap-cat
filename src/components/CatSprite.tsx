@@ -34,10 +34,10 @@ export function CatSprite({ src, tapOverlaySrc, onTap, anim }: CatSpriteProps) {
   };
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center h-full w-full">
       <button
         onPointerDown={handlePointerDown}
-        className="relative outline-none focus:outline-none"
+        className="relative outline-none focus:outline-none max-h-full flex items-center justify-center"
         style={{
           transform: isTapping
             ? `scale(${anim.tapScale}) rotate(${Math.random() > 0.5 ? anim.tapWiggleDeg : -anim.tapWiggleDeg}deg)`
@@ -48,7 +48,7 @@ export function CatSprite({ src, tapOverlaySrc, onTap, anim }: CatSpriteProps) {
         <img
           src={src}
           alt="Cat"
-          className="w-[340px] md:w-[520px] max-w-full h-auto select-none pointer-events-none"
+          className="w-[400px] md:w-[620px] max-w-full max-h-full h-auto object-contain select-none pointer-events-none"
           draggable={false}
         />
 

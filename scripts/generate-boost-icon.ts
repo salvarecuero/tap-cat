@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-import * as dotenv from 'dotenv';
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+import * as dotenv from "dotenv";
+import * as fs from "fs/promises";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 // Load environment variables
 dotenv.config();
 
 // Constants
-const HIGGSFIELD_API_BASE = 'https://platform.higgsfield.ai';
-const MODEL_ID = 'nano-banana-pro'; // May need adjustment based on actual Higgsfield model path
+const HIGGSFIELD_API_BASE = "https://platform.higgsfield.ai";
+const MODEL_ID = "nano-banana-pro"; // May need adjustment based on actual Higgsfield model path
 const POLL_INTERVAL_MS = 3000; // 3 seconds
 const MAX_POLL_ATTEMPTS = 60; // 3 minutes total (60 * 3s)
 
@@ -30,7 +30,7 @@ interface HiggsfieldSubmitResponse {
 }
 
 interface HiggsfieldStatusResponse {
-  status: 'queued' | 'in_progress' | 'completed' | 'failed' | 'nsfw';
+  status: "queued" | "in_progress" | "completed" | "failed" | "nsfw";
   images?: Array<{
     url: string;
   }>;
@@ -38,7 +38,7 @@ interface HiggsfieldStatusResponse {
 }
 
 async function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function submitImageGeneration(prompt: string): Promise<string> {
@@ -46,7 +46,9 @@ async function submitImageGeneration(prompt: string): Promise<string> {
   const keySecret = process.env.HIGGSFIELD_NANO_BANANA_PRO_KEY_SECRET;
 
   if (!keyId || !keySecret) {
-    throw new Error('Missing Higgsfield API credentials. Please set HIGGSFIELD_NANO_BANANA_PRO_KEY_ID and HIGGSFIELD_NANO_BANANA_PRO_KEY_SECRET in .env');
+    throw new Error(
+      "Missing Higgsfield API credentials. Please set HIGGSFIELD_NANO_BANANA_PRO_KEY_ID and HIGGSFIELD_NANO_BANANA_PRO_KEY_SECRET in .env"
+    );
   }
 
   const url = `${HIGGSFIELD_API_BASE}/${MODEL_ID}`;
@@ -55,27 +57,29 @@ async function submitImageGeneration(prompt: string): Promise<string> {
   console.log(`Submitting image generation request to: ${url}`);
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Authorization': authHeader,
-      'Content-Type': 'application/json',
+      Authorization: authHeader,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       prompt,
-      aspect_ratio: '1:1',
-      resolution: '1k', // 1K resolution for icons
+      aspect_ratio: "1:1",
+      resolution: "1k", // 1K resolution for icons
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Failed to submit image generation: ${response.status} ${response.statusText}\n${errorText}`);
+    throw new Error(
+      `Failed to submit image generation: ${response.status} ${response.statusText}\n${errorText}`
+    );
   }
 
   const data: HiggsfieldSubmitResponse = await response.json();
 
   if (!data.request_id) {
-    throw new Error('No request_id in response');
+    throw new Error("No request_id in response");
   }
 
   console.log(`Request submitted. Request ID: ${data.request_id}`);
@@ -93,40 +97,44 @@ async function pollRequestStatus(requestId: string): Promise<string> {
     console.log(`Polling status (attempt ${attempt}/${MAX_POLL_ATTEMPTS})...`);
 
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Authorization': authHeader,
+        Authorization: authHeader,
       },
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to poll status: ${response.status} ${response.statusText}\n${errorText}`);
+      throw new Error(
+        `Failed to poll status: ${response.status} ${response.statusText}\n${errorText}`
+      );
     }
 
     const data: HiggsfieldStatusResponse = await response.json();
     console.log(`Status: ${data.status}`);
 
-    if (data.status === 'completed') {
+    if (data.status === "completed") {
       if (!data.images || data.images.length === 0) {
-        throw new Error('No images in completed response');
+        throw new Error("No images in completed response");
       }
       return data.images[0].url;
     }
 
-    if (data.status === 'failed') {
-      throw new Error(`Image generation failed: ${data.error || 'Unknown error'}`);
+    if (data.status === "failed") {
+      throw new Error(
+        `Image generation failed: ${data.error || "Unknown error"}`
+      );
     }
 
-    if (data.status === 'nsfw') {
-      throw new Error('Image was flagged as NSFW');
+    if (data.status === "nsfw") {
+      throw new Error("Image was flagged as NSFW");
     }
 
     // Still queued or in progress, wait and retry
     await sleep(POLL_INTERVAL_MS);
   }
 
-  throw new Error('Max polling attempts reached. Image generation timed out.');
+  throw new Error("Max polling attempts reached. Image generation timed out.");
 }
 
 async function downloadImage(url: string, savePath: string): Promise<void> {
@@ -135,7 +143,9 @@ async function downloadImage(url: string, savePath: string): Promise<void> {
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Failed to download image: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Failed to download image: ${response.status} ${response.statusText}`
+    );
   }
 
   const arrayBuffer = await response.arrayBuffer();
@@ -161,15 +171,15 @@ async function generateIcon(options: GenerateIconOptions): Promise<void> {
 
   fullPrompt = `${fullPrompt}\n\nStyle requirements: ${BASE_STYLE_PROMPT}`;
 
-  console.log('\n=== Generating Boost Icon ===');
+  console.log("\n=== Generating Boost Icon ===");
   console.log(`Item ID: ${itemId}`);
   console.log(`Description: ${imageDescription}`);
   if (itemDetails) {
     console.log(`Details: ${itemDetails}`);
   }
-  console.log('\n--- Full Prompt ---');
+  console.log("\n--- Full Prompt ---");
   console.log(fullPrompt);
-  console.log('-------------------\n');
+  console.log("-------------------\n");
 
   try {
     // Submit request
@@ -179,12 +189,17 @@ async function generateIcon(options: GenerateIconOptions): Promise<void> {
     const imageUrl = await pollRequestStatus(requestId);
 
     // Download and save
-    const savePath = path.join(process.cwd(), 'public', 'icons', `${itemId}.png`);
+    const savePath = path.join(
+      process.cwd(),
+      "public",
+      "icons",
+      `${itemId}.png`
+    );
     await downloadImage(imageUrl, savePath);
 
-    console.log('\n✓ Icon generation completed successfully!');
+    console.log("\n✓ Icon generation completed successfully!");
   } catch (error) {
-    console.error('\n✗ Icon generation failed:');
+    console.error("\n✗ Icon generation failed:");
     if (error instanceof Error) {
       console.error(error.message);
     } else {
@@ -199,10 +214,14 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.error('Usage: npm run generate-icon <itemId> <imageDescription> [itemDetails]');
-    console.error('');
-    console.error('Example:');
-    console.error('  npm run generate-icon soft_brush "A soft grooming brush with gentle bristles, warm beige and brown tones" "Premium grooming tool for comfortable cat petting"');
+    console.error(
+      "Usage: npm run generate-icon <itemId> <imageDescription> [itemDetails]"
+    );
+    console.error("");
+    console.error("Example:");
+    console.error(
+      '  npm run generate-icon soft_brush "A soft grooming brush with gentle bristles, warm beige and brown tones" "Premium grooming tool for comfortable cat petting"'
+    );
     process.exit(1);
   }
 
@@ -213,11 +232,12 @@ async function main() {
 
 // Run if executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(error => {
-    console.error('Fatal error:', error);
+  main().catch((error) => {
+    console.error("Fatal error:", error);
     process.exit(1);
   });
 }
 
 // Export for use by other scripts
-export { generateIcon, GenerateIconOptions };
+export { generateIcon };
+export type { GenerateIconOptions };

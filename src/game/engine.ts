@@ -89,3 +89,24 @@ export function applyClick(state: GameState, petsPerClick: number): GameState {
     totalPets: state.totalPets + petsPerClick,
   };
 }
+
+/**
+ * Calculate pets per second from auto-click boosts
+ * Takes into account click multipliers
+ */
+export function getPetsPerSecond(
+  boosts: Boost[],
+  owned: Record<string, true>,
+  petsPerClick: number
+): number {
+  const autoClickBoosts = getAutoClickBoosts(boosts, owned);
+
+  let petsPerSecond = 0;
+  for (const boost of autoClickBoosts) {
+    const petsPerInterval = boost.value * petsPerClick;
+    const intervalsPerSecond = 1000 / boost.intervalMs;
+    petsPerSecond += petsPerInterval * intervalsPerSecond;
+  }
+
+  return petsPerSecond;
+}

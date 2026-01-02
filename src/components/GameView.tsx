@@ -9,7 +9,7 @@ import { ShopBar } from "./ShopBar";
 import { ResetButton } from "./ResetButton";
 
 export function GameView() {
-  const { state, activeSpriteSrc, tapCat, buy, reset, mounted } = useGame({
+  const { state, petsPerSecond, activeSpriteSrc, tapCat, buy, reset, mounted } = useGame({
     cat: DEFAULT_CAT,
     boosts: BOOSTS,
   });
@@ -25,7 +25,7 @@ export function GameView() {
 
   return (
     <div
-      className="min-h-screen flex flex-col relative overflow-hidden"
+      className="h-screen flex flex-col relative overflow-hidden"
       style={
         {
           "--bg-top": DEFAULT_CAT.theme.bgTop,
@@ -39,14 +39,14 @@ export function GameView() {
       <div className="absolute inset-0 pattern-overlay pointer-events-none" />
 
       {/* Reset button - top right */}
-      <div className="absolute top-4 right-4 z-10">
+      <div className="absolute top-2 right-2 z-10">
         <ResetButton onReset={reset} />
       </div>
 
       {/* Content */}
-      <div className="relative z-0 flex flex-col flex-1">
-        {/* Cat area - takes ~60% of viewport */}
-        <div className="flex-1 flex items-center justify-center pt-8 pb-4">
+      <div className="relative z-0 flex flex-col h-full">
+        {/* Cat area - flexible, shrinks as needed */}
+        <div className="flex-1 flex items-center justify-center pt-2 pb-1 min-h-0">
           <CatSprite
             src={activeSpriteSrc}
             tapOverlaySrc={DEFAULT_CAT.sprites.tapOverlay}
@@ -56,12 +56,12 @@ export function GameView() {
         </div>
 
         {/* Counter */}
-        <div className="flex items-center justify-center">
-          <Counter value={state.pets} />
+        <div className="flex items-center justify-center flex-shrink-0">
+          <Counter value={state.pets} petsPerSecond={petsPerSecond} />
         </div>
 
         {/* Shop bar - bottom */}
-        <div className="pb-4 pt-2">
+        <div className="pb-2 pt-1 flex-shrink-0">
           <ShopBar
             boosts={BOOSTS}
             ownedBoosts={state.ownedBoosts}

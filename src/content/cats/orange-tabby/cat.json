@@ -2,8 +2,8 @@
   "id": "orange-tabby",
   "name": "Mango",
   "theme": {
-    "bgTop": "#F9C74F",
-    "bgBottom": "#F8961E",
+    "bgTop": "#E6B028",
+    "bgBottom": "#D67A0D",
     "accent": "#7A4E2D"
   },
   "sprites": {
