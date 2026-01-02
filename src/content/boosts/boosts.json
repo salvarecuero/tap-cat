@@ -1,0 +1,23 @@
+[
+  {
+    "id": "x2_click",
+    "title": "Warm Gloves",
+    "description": "Clicks give x2 pets.",
+    "imageDescription": "A pair of cozy knitted gloves with a warm orange/yellow color scheme, simple and friendly style, icon view on transparent background.",
+    "type": "clickMultiplier",
+    "value": 2,
+    "price": 50,
+    "icon": "/icons/gloves.png"
+  },
+  {
+    "id": "auto_1_per_2s",
+    "title": "Auto Scratcher",
+    "description": "+1 pet every 2 seconds.",
+    "imageDescription": "A mechanical cat scratching post with an automated petting arm, warm brown and orange tones, playful and simple style, icon view on transparent background.",
+    "type": "autoClick",
+    "value": 1,
+    "intervalMs": 2000,
+    "price": 120,
+    "icon": "/icons/scratcher.png"
+  }
+]

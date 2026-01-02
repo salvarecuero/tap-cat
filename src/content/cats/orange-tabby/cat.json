@@ -1,0 +1,26 @@
+{
+  "id": "orange-tabby",
+  "name": "Mango",
+  "theme": {
+    "bgTop": "#F9C74F",
+    "bgBottom": "#F8961E",
+    "accent": "#7A4E2D"
+  },
+  "sprites": {
+    "idle": "/sprites/orange-tabby/idle.png",
+    "happy1": "/sprites/orange-tabby/happy1.png",
+    "happy2": "/sprites/orange-tabby/happy2.png",
+    "ecstatic": "/sprites/orange-tabby/ecstatic.png",
+    "tapOverlay": "/sprites/orange-tabby/tap.png",
+    "stages": [
+      { "minPets": 0, "key": "idle" },
+      { "minPets": 25, "key": "happy1" },
+      { "minPets": 75, "key": "happy2" },
+      { "minPets": 200, "key": "ecstatic" }
+    ]
+  },
+  "anim": {
+    "tapScale": 0.96,
+    "tapWiggleDeg": 2
+  }
+}

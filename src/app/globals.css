@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables for theming */
+:root {
+  --bg-top: #F9C74F;
+  --bg-bottom: #F8961E;
+  --accent: #7A4E2D;
+}
+
+/* Pattern overlay */
+.pattern-overlay {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    var(--accent) 20px,
+    var(--accent) 21px
+  );
+  opacity: 0.08;
+}
+
+/* Hide scrollbar for shop bar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fade out animation for tap overlay */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

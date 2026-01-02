@@ -1,0 +1,131 @@
+"use client";
+
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import type { GameState, CatProfile, Boost } from "./types";
+import {
+  getActiveStageSpriteKey,
+  getPetsPerClick,
+  getAutoClickBoosts,
+  canBuyBoost,
+  buyBoost as engineBuyBoost,
+  applyClick,
+} from "./engine";
+import { loadGameState, saveGameState, clearGameState, debounce } from "./save";
+import { useInterval } from "./useInterval";
+
+const DEFAULT_STATE: GameState = {
+  version: 1,
+  pets: 0,
+  totalPets: 0,
+  ownedBoosts: {},
+  selectedCatId: "orange-tabby",
+};
+
+interface UseGameProps {
+  cat: CatProfile;
+  boosts: Boost[];
+}
+
+export function useGame({ cat, boosts }: UseGameProps) {
+  const [state, setState] = useState<GameState>(DEFAULT_STATE);
+  const [mounted, setMounted] = useState(false);
+
+  // Debounced save function
+  const debouncedSave = useRef(
+    debounce((s: GameState) => saveGameState(s), 500)
+  ).current;
+
+  // Load state on mount (client-side only)
+  useEffect(() => {
+    const loaded = loadGameState(DEFAULT_STATE);
+    setState(loaded);
+    setMounted(true);
+  }, []);
+
+  // Auto-save on state changes
+  useEffect(() => {
+    if (mounted) {
+      debouncedSave(state);
+    }
+  }, [state, mounted, debouncedSave]);
+
+  // Derived values
+  const petsPerClick = useMemo(
+    () => getPetsPerClick(boosts, state.ownedBoosts),
+    [boosts, state.ownedBoosts]
+  );
+
+  const activeSpriteKey = useMemo(
+    () => getActiveStageSpriteKey(cat, state.totalPets),
+    [cat, state.totalPets]
+  );
+
+  const activeSpriteSrc = useMemo(() => {
+    const sprites = cat.sprites as any;
+    return sprites[activeSpriteKey] || cat.sprites.idle;
+  }, [cat, activeSpriteKey]);
+
+  const autoClickBoosts = useMemo(
+    () => getAutoClickBoosts(boosts, state.ownedBoosts),
+    [boosts, state.ownedBoosts]
+  );
+
+  // Actions
+  const tapCat = useCallback(() => {
+    setState((prev) => applyClick(prev, petsPerClick));
+  }, [petsPerClick]);
+
+  const buy = useCallback(
+    (boostId: string) => {
+      const boost = boosts.find((b) => b.id === boostId);
+      if (!boost) return;
+
+      setState((prev) => {
+        if (!canBuyBoost(prev, boost)) {
+          return prev;
+        }
+        return engineBuyBoost(prev, boost);
+      });
+    },
+    [boosts]
+  );
+
+  const reset = useCallback(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.confirm("Reset all progress? This cannot be undone.")
+    ) {
+      clearGameState();
+      setState(DEFAULT_STATE);
+    }
+  }, []);
+
+  // Auto-click interval
+  // For v1, we assume at most one auto-click boost
+  // Calculate interval based on first auto-click boost
+  const autoClickInterval = autoClickBoosts.length > 0
+    ? autoClickBoosts[0].intervalMs
+    : null;
+
+  const autoClickValue = autoClickBoosts.reduce(
+    (sum, boost) => sum + boost.value,
+    0
+  );
+
+  useInterval(() => {
+    if (autoClickValue > 0) {
+      setState((prev) => applyClick(prev, autoClickValue));
+    }
+  }, autoClickInterval);
+
+  return {
+    state,
+    petsPerClick,
+    activeSpriteKey,
+    activeSpriteSrc,
+    tapCat,
+    buy,
+    reset,
+    mounted,
+  };
+}
