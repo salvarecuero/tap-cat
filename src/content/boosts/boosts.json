@@ -19,5 +19,15 @@
     "intervalMs": 2000,
     "price": 120,
     "icon": "/icons/scratcher.png"
+  },
+  {
+    "id": "premium_catnip_toy",
+    "title": "Premium Catnip Toy",
+    "description": "Clicks give x4 pets.",
+    "imageDescription": "A small plush mouse toy in warm cream color with soft brown outline, subtle sage green accent on the ears, centered on transparent background. Simple rounded shapes with gentle shading.",
+    "type": "clickMultiplier",
+    "value": 4,
+    "price": 300,
+    "icon": "/icons/premium_catnip_toy.png"
   }
 ]
