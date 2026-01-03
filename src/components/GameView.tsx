@@ -7,13 +7,14 @@ import { CatSprite } from "./CatSprite";
 import { Counter } from "./Counter";
 import { ShopBar } from "./ShopBar";
 import { ResetButton } from "./ResetButton";
+import { MaxStageMessage } from "./MaxStageMessage";
 
 const isDev = process.env.NODE_ENV === "development";
 
 const DEBUG_AMOUNTS = [10, 100, 1000, 10000];
 
 export function GameView() {
-  const { state, petsPerSecond, activeSpriteSrc, tapCat, buy, reset, addPets, mounted } = useGame({
+  const { state, petsPerSecond, activeSpriteSrc, isAtMaxStage, tapCat, buy, reset, addPets, mounted } = useGame({
     cat: DEFAULT_CAT,
     boosts: BOOSTS,
   });
@@ -76,6 +77,9 @@ export function GameView() {
             </div>
           )}
         </div>
+
+        {/* Max stage message */}
+        <MaxStageMessage visible={isAtMaxStage} />
 
         {/* Shop bar - bottom */}
         <div className="pb-2 pt-1 flex-shrink-0">

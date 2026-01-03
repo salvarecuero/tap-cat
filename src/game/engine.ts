@@ -24,6 +24,15 @@ export function getActiveStageSpriteKey(
 }
 
 /**
+ * Get the maximum (final) stage key for a cat
+ * Used to determine if player has reached the final evolution
+ */
+export function getMaxStageKey(cat: CatProfile): string {
+  const stages = [...cat.sprites.stages].sort((a, b) => a.minPets - b.minPets);
+  return stages[stages.length - 1].key;
+}
+
+/**
  * Calculate pets per click based on owned boosts
  */
 export function getPetsPerClick(

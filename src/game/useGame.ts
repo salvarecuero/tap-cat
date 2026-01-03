@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import type { GameState, CatProfile, Boost } from "./types";
 import {
   getActiveStageSpriteKey,
+  getMaxStageKey,
   getPetsPerClick,
   getPetsPerSecond,
   getAutoClickBoosts,
@@ -65,6 +66,11 @@ export function useGame({ cat, boosts }: UseGameProps) {
     const sprites = cat.sprites as any;
     return sprites[activeSpriteKey] || cat.sprites.idle;
   }, [cat, activeSpriteKey]);
+
+  const isAtMaxStage = useMemo(
+    () => activeSpriteKey === getMaxStageKey(cat),
+    [activeSpriteKey, cat]
+  );
 
   const autoClickBoosts = useMemo(
     () => getAutoClickBoosts(boosts, state.ownedBoosts),
@@ -129,6 +135,7 @@ export function useGame({ cat, boosts }: UseGameProps) {
     petsPerSecond,
     activeSpriteKey,
     activeSpriteSrc,
+    isAtMaxStage,
     tapCat,
     buy,
     reset,
