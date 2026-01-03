@@ -73,7 +73,7 @@ export function GameView() {
       {/* Content */}
       <div className="relative z-0 flex flex-col h-full">
         {/* Cat area - flexible, shrinks as needed */}
-        <div className="flex-1 flex items-center justify-center pt-2 pb-1 min-h-0">
+        <div className="flex-1 flex items-center justify-center pt-2 pb-1 min-h-0 overflow-hidden">
           <CatSprite
             src={activeSpriteSrc}
             tapOverlaySrc={activeCat.sprites.tapOverlay}
@@ -104,13 +104,25 @@ export function GameView() {
         <MaxStageMessage visible={isAtMaxStage} />
 
         {/* Shop bar - bottom */}
-        <div className="pb-2 pt-1 flex-shrink-0">
+        <div className="pb-1 pt-1 flex-shrink-0">
           <ShopBar
             boosts={BOOSTS}
             ownedBoosts={state.ownedBoosts}
             currentPets={state.pets}
             onBuy={buy}
           />
+        </div>
+
+        {/* Footer */}
+        <div className="flex-shrink-0 pb-2 px-4">
+          <a
+            href="https://www.salvarecuero.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center text-xs font-medium text-white/80 hover:text-white bg-black/20 rounded-full py-1.5 px-4 mx-auto w-fit transition-colors"
+          >
+            Created with ❤️ by <span className="font-bold">@salvarecuero</span>
+          </a>
         </div>
       </div>
     </div>

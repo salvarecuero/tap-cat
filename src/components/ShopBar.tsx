@@ -92,7 +92,7 @@ export function ShopBar({
                   onBuy={() => onBuy(boost.id)}
                 />
               ) : (
-                <div className="w-[96px] h-[80px] md:w-[120px] md:h-[100px] bg-[#F3E7C6] bg-opacity-20 border-2 border-dashed border-[var(--accent)] border-opacity-30 rounded-xl flex items-center justify-center">
+                <div className="w-[110px] h-[118px] md:w-[140px] md:h-[140px] bg-[#F3E7C6] bg-opacity-20 border-2 border-dashed border-[var(--accent)] border-opacity-30 rounded-xl flex items-center justify-center">
                   <span className="text-[var(--accent)] opacity-40 text-xs">🔒</span>
                 </div>
               )}

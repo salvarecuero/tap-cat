@@ -23,7 +23,7 @@ export function BoostCard({ boost, owned, canAfford, onBuy }: BoostCardProps) {
       disabled={disabled}
       className={`
         relative flex flex-col items-center justify-between
-        w-[96px] h-[80px] md:w-[120px] md:h-[100px]
+        w-[110px] h-[118px] md:w-[140px] md:h-[140px]
         bg-[#F3E7C6] border-2 border-[var(--accent)] border-opacity-35 rounded-xl
         transition-all duration-150 p-1.5 md:p-2
         ${!disabled ? "hover:scale-105 hover:shadow-lg cursor-pointer" : "opacity-60 cursor-not-allowed"}
@@ -39,17 +39,17 @@ export function BoostCard({ boost, owned, canAfford, onBuy }: BoostCardProps) {
       </div>
 
       {/* Boost Title - improved visibility */}
-      <div className="text-[10px] md:text-[11px] font-bold text-[#5A3A1F] text-center line-clamp-1 leading-tight px-0.5">
+      <div className="text-xs md:text-sm font-bold text-[#5A3A1F] text-center line-clamp-2 leading-tight px-0.5">
         {boost.title}
       </div>
 
       {/* Boost Description - what it does */}
-      <div className="text-[8px] md:text-[9px] font-medium text-[#7A4E2D] text-center line-clamp-2 leading-tight px-0.5">
+      <div className="text-[10px] md:text-xs font-medium text-[#7A4E2D] text-center line-clamp-2 leading-tight px-0.5">
         {boost.description}
       </div>
 
       {/* Price with currency icon */}
-      <div className={`text-[9px] md:text-[10px] font-bold ${priceColor} flex items-center gap-0.5`}>
+      <div className={`text-xs md:text-sm font-bold ${priceColor} flex items-center gap-0.5`}>
         {owned ? (
           <span className="text-green-700">Owned</span>
         ) : (
