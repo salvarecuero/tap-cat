@@ -8,8 +8,12 @@ import { Counter } from "./Counter";
 import { ShopBar } from "./ShopBar";
 import { ResetButton } from "./ResetButton";
 
+const isDev = process.env.NODE_ENV === "development";
+
+const DEBUG_AMOUNTS = [10, 100, 1000, 10000];
+
 export function GameView() {
-  const { state, petsPerSecond, activeSpriteSrc, tapCat, buy, reset, mounted } = useGame({
+  const { state, petsPerSecond, activeSpriteSrc, tapCat, buy, reset, addPets, mounted } = useGame({
     cat: DEFAULT_CAT,
     boosts: BOOSTS,
   });
@@ -56,8 +60,21 @@ export function GameView() {
         </div>
 
         {/* Counter */}
-        <div className="flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center justify-center gap-2 flex-shrink-0">
           <Counter value={state.pets} petsPerSecond={petsPerSecond} />
+          {isDev && (
+            <div className="flex gap-1">
+              {DEBUG_AMOUNTS.map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() => addPets(amount)}
+                  className="bg-[#5A3A1F] text-white text-xs font-mono px-2 py-1 rounded opacity-70 hover:opacity-100 transition-opacity"
+                >
+                  +{amount >= 1000 ? `${amount / 1000}K` : amount}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Shop bar - bottom */}

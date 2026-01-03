@@ -106,6 +106,11 @@ export function useGame({ cat, boosts }: UseGameProps) {
     }
   }, []);
 
+  // Debug: add pets directly (for development only)
+  const addPets = useCallback((amount: number) => {
+    setState((prev) => applyClick(prev, amount));
+  }, []);
+
   // Auto-click interval - update every 500ms
   // Calculate the proportional amount to add based on pets per second
   const UPDATE_INTERVAL_MS = 500;
@@ -127,6 +132,7 @@ export function useGame({ cat, boosts }: UseGameProps) {
     tapCat,
     buy,
     reset,
+    addPets,
     mounted,
   };
 }
