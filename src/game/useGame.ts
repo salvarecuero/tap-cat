@@ -11,6 +11,7 @@ import {
   canBuyBoost,
   buyBoost as engineBuyBoost,
   applyClick,
+  getSpriteUrlByKey,
 } from "./engine";
 import { loadGameState, saveGameState, clearGameState, debounce } from "./save";
 import { useInterval } from "./useInterval";
@@ -69,8 +70,7 @@ export function useGame({ boosts }: UseGameProps) {
   );
 
   const activeSpriteSrc = useMemo(() => {
-    const sprites = activeCat.sprites as Record<string, string>;
-    return sprites[activeSpriteKey] || activeCat.sprites.idle;
+    return getSpriteUrlByKey(activeCat, activeSpriteKey);
   }, [activeCat, activeSpriteKey]);
 
   const isAtMaxStage = useMemo(
@@ -148,13 +148,16 @@ export function useGame({ boosts }: UseGameProps) {
   // Calculate the proportional amount to add based on pets per second
   const UPDATE_INTERVAL_MS = 500;
 
-  useInterval(() => {
-    if (petsPerSecond > 0) {
-      // Add proportional amount for 500ms interval
-      const petsToAdd = (petsPerSecond * UPDATE_INTERVAL_MS) / 1000;
-      setState((prev) => applyClick(prev, petsToAdd));
-    }
-  }, petsPerSecond > 0 ? UPDATE_INTERVAL_MS : null);
+  useInterval(
+    () => {
+      if (petsPerSecond > 0) {
+        // Add proportional amount for 500ms interval
+        const petsToAdd = (petsPerSecond * UPDATE_INTERVAL_MS) / 1000;
+        setState((prev) => applyClick(prev, petsToAdd));
+      }
+    },
+    petsPerSecond > 0 ? UPDATE_INTERVAL_MS : null
+  );
 
   return {
     state,

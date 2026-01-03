@@ -18,6 +18,7 @@ export interface CatSprites {
   ecstatic: string;
   tapOverlay?: string;
   stages: CatStage[];
+  [key: string]: string | CatStage[] | undefined;
 }
 
 export interface CatAnim {

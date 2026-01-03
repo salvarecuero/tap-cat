@@ -33,6 +33,28 @@ export function getMaxStageKey(cat: CatProfile): string {
 }
 
 /**
+ * Get sprite URL by key, falling back to idle if key is invalid
+ * Uses the cat's stages array to validate the key, supporting any stage keys
+ */
+export function getSpriteUrlByKey(cat: CatProfile, key: string): string {
+  const { sprites } = cat;
+
+  // Check if the key exists in the stages array
+  const isValidKey = sprites.stages.some((stage) => stage.key === key);
+
+  if (isValidKey) {
+    const spriteUrl = sprites[key];
+    // Ensure it's a string (not stages array or undefined)
+    if (typeof spriteUrl === "string") {
+      return spriteUrl;
+    }
+  }
+
+  // Fallback to idle
+  return sprites.idle;
+}
+
+/**
  * Calculate pets per click based on owned boosts
  */
 export function getPetsPerClick(

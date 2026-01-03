@@ -23,7 +23,7 @@ export function BoostCard({ boost, owned, canAfford, onBuy }: BoostCardProps) {
       disabled={disabled}
       className={`
         relative flex flex-col items-center justify-between
-        w-[110px] h-[118px] md:w-[140px] md:h-[140px]
+        w-[120px] md:w-[150px] aspect-square flex-shrink-0 snap-start
         bg-[#F3E7C6] border-2 border-[var(--accent)] border-opacity-35 rounded-xl
         transition-all duration-150 p-1.5 md:p-2
         ${!disabled ? "hover:scale-105 hover:shadow-lg cursor-pointer" : "opacity-60 cursor-not-allowed"}

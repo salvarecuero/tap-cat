@@ -80,7 +80,7 @@ export function ShopBar({
         {/* Two-row grid layout */}
         <div
           ref={scrollRef}
-          className="grid grid-cols-4 md:grid-cols-6 grid-rows-2 gap-2 md:gap-2.5 overflow-x-auto scrollbar-hide scroll-smooth"
+          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory py-1"
         >
           {tiles.map((boost, index) => (
             <div key={index} className="flex-shrink-0">
@@ -92,7 +92,7 @@ export function ShopBar({
                   onBuy={() => onBuy(boost.id)}
                 />
               ) : (
-                <div className="w-[110px] h-[118px] md:w-[140px] md:h-[140px] bg-[#F3E7C6] bg-opacity-20 border-2 border-dashed border-[var(--accent)] border-opacity-30 rounded-xl flex items-center justify-center">
+                <div className="w-[120px] md:w-[150px] aspect-square flex-shrink-0 snap-start bg-[#F3E7C6] bg-opacity-20 border-2 border-dashed border-[var(--accent)] border-opacity-30 rounded-xl flex items-center justify-center">
                   <span className="text-[var(--accent)] opacity-40 text-xs">🔒</span>
                 </div>
               )}

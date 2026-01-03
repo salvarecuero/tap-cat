@@ -98,15 +98,17 @@ export function GameView() {
       </div>
 
       {/* Content */}
-      <div className="relative z-0 flex flex-col h-full">
+      <div className="relative z-0 flex flex-col h-full min-h-0">
         {/* Cat area - flexible, shrinks as needed */}
-        <div className="flex-1 flex items-center justify-center pt-2 pb-1 min-h-0 overflow-hidden">
-          <CatSprite
-            src={activeSpriteSrc}
-            tapOverlaySrc={activeCat.sprites.tapOverlay}
-            onTap={handleTap}
-            anim={activeCat.anim}
-          />
+        <div className="flex-1 flex items-center justify-center p-4 md:p-6 min-h-0 overflow-hidden" style={{ minHeight: 0 }}>
+          <div className="w-full h-full max-w-full max-h-full flex items-center justify-center">
+            <CatSprite
+              src={activeSpriteSrc}
+              tapOverlaySrc={activeCat.sprites.tapOverlay}
+              onTap={handleTap}
+              anim={activeCat.anim}
+            />
+          </div>
         </div>
 
         {/* Counter */}
