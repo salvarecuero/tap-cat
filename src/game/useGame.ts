@@ -72,8 +72,8 @@ export function useGame({ cat, boosts }: UseGameProps) {
   );
 
   const petsPerSecond = useMemo(
-    () => getPetsPerSecond(boosts, state.ownedBoosts, petsPerClick),
-    [boosts, state.ownedBoosts, petsPerClick]
+    () => getPetsPerSecond(boosts, state.ownedBoosts),
+    [boosts, state.ownedBoosts]
   );
 
   // Actions

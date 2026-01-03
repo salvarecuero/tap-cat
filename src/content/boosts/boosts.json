@@ -12,12 +12,12 @@
   {
     "id": "auto_1_per_2s",
     "title": "Auto Scratcher",
-    "description": "+1 pet every 2 seconds.",
+    "description": "+5 pets every 2 seconds.",
     "imageDescription": "A mechanical cat scratching post with an automated petting arm, warm brown and orange tones, playful and simple style, icon view on transparent background.",
     "type": "autoClick",
-    "value": 1,
+    "value": 5,
     "intervalMs": 2000,
-    "price": 120,
+    "price": 100,
     "icon": "/icons/scratcher.png"
   },
   {
@@ -27,39 +27,39 @@
     "imageDescription": "A small plush mouse toy in warm cream color with soft brown outline, subtle sage green accent on the ears, centered on transparent background. Simple rounded shapes with gentle shading.",
     "type": "clickMultiplier",
     "value": 4,
-    "price": 300,
+    "price": 200,
     "icon": "/icons/premium_catnip_toy.png"
   },
   {
     "id": "feather_wand_auto",
     "title": "Feather Wand Auto-Toy",
-    "description": "+2 pets every 2 seconds.",
+    "description": "+10 pets every 2 seconds.",
     "imageDescription": "A cat teaser wand with soft fluffy feathers, cream handle with dusty blue feather tips, simple playful style, icon view on transparent background",
     "type": "autoClick",
-    "value": 2,
+    "value": 10,
     "intervalMs": 2000,
-    "price": 450,
+    "price": 400,
     "icon": "/icons/feather_wand_auto.png"
   },
   {
     "id": "magic_mittens",
     "title": "Magic Mittens",
-    "description": "Clicks give x8 pets.",
+    "description": "Clicks give x6 pets.",
     "imageDescription": "A pair of fingerless mittens with sparkle details, warm beige wool with subtle lavender-gray accent, cozy simple style, icon view on transparent background",
     "type": "clickMultiplier",
-    "value": 8,
-    "price": 700,
+    "value": 6,
+    "price": 800,
     "icon": "/icons/magic_mittens.png"
   },
   {
     "id": "motorized_mouse",
     "title": "Motorized Mouse",
-    "description": "+3 pets every 1.5 seconds.",
+    "description": "+15 pets every 1.5 seconds.",
     "imageDescription": "A small mechanical toy mouse with visible gears, tan body with soft brown outline and muted teal gear accent, simple cartoon style, icon view on transparent background",
     "type": "autoClick",
-    "value": 3,
+    "value": 15,
     "intervalMs": 1500,
-    "price": 1050,
+    "price": 1600,
     "icon": "/icons/motorized_mouse.png"
   },
   {
@@ -70,7 +70,7 @@
     "type": "autoClick",
     "value": 5,
     "intervalMs": 1000,
-    "price": 1550,
+    "price": 3200,
     "icon": "/icons/treat_dispenser.png"
   },
   {
@@ -81,17 +81,17 @@
     "type": "autoClick",
     "value": 8,
     "intervalMs": 1000,
-    "price": 2300,
+    "price": 6400,
     "icon": "/icons/laser_pointer_bot.png"
   },
   {
     "id": "golden_paw_gloves",
     "title": "Golden Paw Gloves",
-    "description": "Clicks give x12 pets.",
+    "description": "Clicks give x10 pets.",
     "imageDescription": "Luxurious padded gloves with paw print details, warm golden-beige with soft brown paw pad accents, premium cozy style, icon view on transparent background",
     "type": "clickMultiplier",
-    "value": 12,
-    "price": 3400,
+    "value": 10,
+    "price": 12800,
     "icon": "/icons/golden_paw_gloves.png"
   },
   {
@@ -102,7 +102,7 @@
     "type": "autoClick",
     "value": 12,
     "intervalMs": 1000,
-    "price": 4900,
+    "price": 25600,
     "icon": "/icons/robotic_belly_rubber.png"
   },
   {
@@ -113,7 +113,7 @@
     "type": "autoClick",
     "value": 20,
     "intervalMs": 1000,
-    "price": 7000,
+    "price": 51200,
     "icon": "/icons/quantum_catnip_garden.png"
   },
   {
@@ -124,7 +124,7 @@
     "type": "autoClick",
     "value": 35,
     "intervalMs": 500,
-    "price": 10000,
+    "price": 100000,
     "icon": "/icons/purrfect_paradise_machine.png"
   }
 ]

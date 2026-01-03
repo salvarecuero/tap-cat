@@ -14,9 +14,9 @@
     "tapOverlay": "/sprites/orange-tabby/tap.png",
     "stages": [
       { "minPets": 0, "key": "idle" },
-      { "minPets": 25, "key": "happy1" },
-      { "minPets": 75, "key": "happy2" },
-      { "minPets": 200, "key": "ecstatic" }
+      { "minPets": 1000, "key": "happy1" },
+      { "minPets": 20000, "key": "happy2" },
+      { "minPets": 50000, "key": "ecstatic" }
     ]
   },
   "anim": {

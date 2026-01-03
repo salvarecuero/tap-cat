@@ -91,22 +91,27 @@ export function applyClick(state: GameState, petsPerClick: number): GameState {
 }
 
 /**
- * Calculate pets per second from auto-click boosts
- * Takes into account click multipliers
+ * Calculate pets per second from auto-click boosts with click synergy.
+ * Auto-clicks benefit partially from click multipliers via sqrt scaling,
+ * capped to maintain 2-3:1 active advantage.
  */
 export function getPetsPerSecond(
   boosts: Boost[],
-  owned: Record<string, true>,
-  petsPerClick: number
+  owned: Record<string, true>
 ): number {
   const autoClickBoosts = getAutoClickBoosts(boosts, owned);
+  const petsPerClick = getPetsPerClick(boosts, owned);
 
-  let petsPerSecond = 0;
+  // Synergy: auto-clicks get sqrt of click multiplier, capped at 24x
+  const SYNERGY_CAP = 24;
+  const synergyMultiplier = Math.min(Math.sqrt(petsPerClick), SYNERGY_CAP);
+
+  let basePetsPerSecond = 0;
   for (const boost of autoClickBoosts) {
-    const petsPerInterval = boost.value * petsPerClick;
+    const petsPerInterval = boost.value;
     const intervalsPerSecond = 1000 / boost.intervalMs;
-    petsPerSecond += petsPerInterval * intervalsPerSecond;
+    basePetsPerSecond += petsPerInterval * intervalsPerSecond;
   }
 
-  return petsPerSecond;
+  return basePetsPerSecond * synergyMultiplier;
 }
