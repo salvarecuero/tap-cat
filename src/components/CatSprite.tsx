@@ -6,7 +6,7 @@ import type { CatAnim } from "@/game/types";
 interface CatSpriteProps {
   src: string;
   tapOverlaySrc?: string;
-  onTap: () => void;
+  onTap: (x: number, y: number) => void;
   anim: CatAnim;
 }
 
@@ -21,7 +21,7 @@ export function CatSprite({ src, tapOverlaySrc, onTap, anim }: CatSpriteProps) {
     if (isTapping) return;
 
     setIsTapping(true);
-    onTap();
+    onTap(e.clientX, e.clientY);
 
     // Show tap overlay
     if (tapOverlaySrc) {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useCallback } from "react";
 import { ALL_CATS } from "@/content/cats";
 import { BOOSTS } from "@/content/boosts";
 import { useGame } from "@/game/useGame";
@@ -9,6 +10,14 @@ import { ShopBar } from "./ShopBar";
 import { ResetButton } from "./ResetButton";
 import { MaxStageMessage } from "./MaxStageMessage";
 import { CatSelector } from "./CatSelector";
+import { TapIndicator } from "./TapIndicator";
+
+interface TapIndicatorData {
+  id: number;
+  x: number;
+  y: number;
+  value: number;
+}
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -19,6 +28,7 @@ export function GameView() {
     state,
     activeCat,
     selectedCatId,
+    petsPerClick,
     petsPerSecond,
     activeSpriteSrc,
     isAtMaxStage,
@@ -31,6 +41,23 @@ export function GameView() {
   } = useGame({
     boosts: BOOSTS,
   });
+
+  // Tap indicators state
+  const [indicators, setIndicators] = useState<TapIndicatorData[]>([]);
+  const nextIndicatorId = useRef(0);
+
+  const handleTap = useCallback(
+    (x: number, y: number) => {
+      tapCat();
+      const id = nextIndicatorId.current++;
+      setIndicators((prev) => [...prev, { id, x, y, value: petsPerClick }]);
+    },
+    [tapCat, petsPerClick]
+  );
+
+  const removeIndicator = useCallback((id: number) => {
+    setIndicators((prev) => prev.filter((ind) => ind.id !== id));
+  }, []);
 
   // Avoid hydration mismatch by not rendering until mounted
   if (!mounted) {
@@ -77,7 +104,7 @@ export function GameView() {
           <CatSprite
             src={activeSpriteSrc}
             tapOverlaySrc={activeCat.sprites.tapOverlay}
-            onTap={tapCat}
+            onTap={handleTap}
             anim={activeCat.anim}
           />
         </div>
@@ -125,6 +152,17 @@ export function GameView() {
           </a>
         </div>
       </div>
+
+      {/* Tap indicators overlay */}
+      {indicators.map((ind) => (
+        <TapIndicator
+          key={ind.id}
+          x={ind.x}
+          y={ind.y}
+          value={ind.value}
+          onComplete={() => removeIndicator(ind.id)}
+        />
+      ))}
     </div>
   );
 }
