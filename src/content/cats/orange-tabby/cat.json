@@ -4,7 +4,8 @@
   "theme": {
     "bgTop": "#E6B028",
     "bgBottom": "#D67A0D",
-    "accent": "#7A4E2D"
+    "accent": "#7A4E2D",
+    "patternClass": "pattern-overlay"
   },
   "sprites": {
     "idle": "/sprites/orange-tabby/idle.png",

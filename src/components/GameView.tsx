@@ -1,6 +1,6 @@
 "use client";
 
-import { DEFAULT_CAT } from "@/content/cats/orange-tabby";
+import { ALL_CATS } from "@/content/cats";
 import { BOOSTS } from "@/content/boosts";
 import { useGame } from "@/game/useGame";
 import { CatSprite } from "./CatSprite";
@@ -8,21 +8,34 @@ import { Counter } from "./Counter";
 import { ShopBar } from "./ShopBar";
 import { ResetButton } from "./ResetButton";
 import { MaxStageMessage } from "./MaxStageMessage";
+import { CatSelector } from "./CatSelector";
 
 const isDev = process.env.NODE_ENV === "development";
 
 const DEBUG_AMOUNTS = [10, 100, 1000, 10000];
 
 export function GameView() {
-  const { state, petsPerSecond, activeSpriteSrc, isAtMaxStage, tapCat, buy, reset, addPets, mounted } = useGame({
-    cat: DEFAULT_CAT,
+  const {
+    state,
+    activeCat,
+    selectedCatId,
+    petsPerSecond,
+    activeSpriteSrc,
+    isAtMaxStage,
+    tapCat,
+    buy,
+    reset,
+    selectCat,
+    addPets,
+    mounted,
+  } = useGame({
     boosts: BOOSTS,
   });
 
   // Avoid hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#F9C74F] to-[#F8961E]">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#6B5B4F] to-[#4A3F36]">
         <p className="text-white text-lg">Loading...</p>
       </div>
     );
@@ -33,15 +46,24 @@ export function GameView() {
       className="h-screen flex flex-col relative overflow-hidden"
       style={
         {
-          "--bg-top": DEFAULT_CAT.theme.bgTop,
-          "--bg-bottom": DEFAULT_CAT.theme.bgBottom,
-          "--accent": DEFAULT_CAT.theme.accent,
+          "--bg-top": activeCat.theme.bgTop,
+          "--bg-bottom": activeCat.theme.bgBottom,
+          "--accent": activeCat.theme.accent,
           background: `linear-gradient(to bottom, var(--bg-top), var(--bg-bottom))`,
         } as React.CSSProperties
       }
     >
       {/* Background pattern overlay */}
-      <div className="absolute inset-0 pattern-overlay pointer-events-none" />
+      <div className={`absolute inset-0 ${activeCat.theme.patternClass} pointer-events-none`} />
+
+      {/* Cat selector - top left */}
+      <div className="absolute top-2 left-2 z-10">
+        <CatSelector
+          cats={ALL_CATS}
+          selectedCatId={selectedCatId}
+          onSelect={selectCat}
+        />
+      </div>
 
       {/* Reset button - top right */}
       <div className="absolute top-2 right-2 z-10">
@@ -54,9 +76,9 @@ export function GameView() {
         <div className="flex-1 flex items-center justify-center pt-2 pb-1 min-h-0">
           <CatSprite
             src={activeSpriteSrc}
-            tapOverlaySrc={DEFAULT_CAT.sprites.tapOverlay}
+            tapOverlaySrc={activeCat.sprites.tapOverlay}
             onTap={tapCat}
-            anim={DEFAULT_CAT.anim}
+            anim={activeCat.anim}
           />
         </div>
 

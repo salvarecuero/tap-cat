@@ -9,7 +9,7 @@
   --accent: #7A4E2D;
 }
 
-/* Pattern overlay */
+/* Pattern overlay - diagonal stripes */
 .pattern-overlay {
   background-image: repeating-linear-gradient(
     45deg,
@@ -19,6 +19,26 @@
     var(--accent) 21px
   );
   opacity: 0.10;
+}
+
+/* Pattern crosshatch - intersecting diagonals */
+.pattern-crosshatch {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 15px,
+      var(--accent) 15px,
+      var(--accent) 16px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 15px,
+      var(--accent) 15px,
+      var(--accent) 16px
+    );
+  opacity: 0.22;
 }
 
 /* Hide scrollbar for shop bar */

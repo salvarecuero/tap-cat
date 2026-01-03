@@ -3,6 +3,7 @@ export interface CatTheme {
   bgTop: string;
   bgBottom: string;
   accent: string;
+  patternClass: string;
 }
 
 export interface CatStage {

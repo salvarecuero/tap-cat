@@ -5,6 +5,7 @@ const CatThemeSchema = z.object({
   bgTop: z.string(),
   bgBottom: z.string(),
   accent: z.string(),
+  patternClass: z.string(),
 });
 
 const CatStageSchema = z.object({

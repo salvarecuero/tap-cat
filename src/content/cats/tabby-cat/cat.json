@@ -1,0 +1,27 @@
+{
+  "id": "tabby-cat",
+  "name": "Smokey",
+  "theme": {
+    "bgTop": "#5C5047",
+    "bgBottom": "#3A332D",
+    "accent": "#1A1816",
+    "patternClass": "pattern-crosshatch"
+  },
+  "sprites": {
+    "idle": "/sprites/tabby-cat/idle.png",
+    "happy1": "/sprites/tabby-cat/happy1.png",
+    "happy2": "/sprites/tabby-cat/happy2.png",
+    "ecstatic": "/sprites/tabby-cat/ecstatic.png",
+    "tapOverlay": "/sprites/tabby-cat/tap.png",
+    "stages": [
+      { "minPets": 0, "key": "idle" },
+      { "minPets": 1000, "key": "happy1" },
+      { "minPets": 20000, "key": "happy2" },
+      { "minPets": 50000, "key": "ecstatic" }
+    ]
+  },
+  "anim": {
+    "tapScale": 0.96,
+    "tapWiggleDeg": 2
+  }
+}

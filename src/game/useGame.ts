@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import type { GameState, CatProfile, Boost } from "./types";
+import type { GameState, Boost } from "./types";
 import {
   getActiveStageSpriteKey,
   getMaxStageKey,
@@ -14,6 +14,7 @@ import {
 } from "./engine";
 import { loadGameState, saveGameState, clearGameState, debounce } from "./save";
 import { useInterval } from "./useInterval";
+import { getCatById, ALL_CATS } from "@/content/cats";
 
 const DEFAULT_STATE: GameState = {
   version: 1,
@@ -24,11 +25,10 @@ const DEFAULT_STATE: GameState = {
 };
 
 interface UseGameProps {
-  cat: CatProfile;
   boosts: Boost[];
 }
 
-export function useGame({ cat, boosts }: UseGameProps) {
+export function useGame({ boosts }: UseGameProps) {
   const [state, setState] = useState<GameState>(DEFAULT_STATE);
   const [mounted, setMounted] = useState(false);
 
@@ -51,6 +51,12 @@ export function useGame({ cat, boosts }: UseGameProps) {
     }
   }, [state, mounted, debouncedSave]);
 
+  // Get active cat from state
+  const activeCat = useMemo(
+    () => getCatById(state.selectedCatId) ?? ALL_CATS[0],
+    [state.selectedCatId]
+  );
+
   // Derived values
   const petsPerClick = useMemo(
     () => getPetsPerClick(boosts, state.ownedBoosts),
@@ -58,18 +64,18 @@ export function useGame({ cat, boosts }: UseGameProps) {
   );
 
   const activeSpriteKey = useMemo(
-    () => getActiveStageSpriteKey(cat, state.pets),
-    [cat, state.pets]
+    () => getActiveStageSpriteKey(activeCat, state.pets),
+    [activeCat, state.pets]
   );
 
   const activeSpriteSrc = useMemo(() => {
-    const sprites = cat.sprites as any;
-    return sprites[activeSpriteKey] || cat.sprites.idle;
-  }, [cat, activeSpriteKey]);
+    const sprites = activeCat.sprites as Record<string, string>;
+    return sprites[activeSpriteKey] || activeCat.sprites.idle;
+  }, [activeCat, activeSpriteKey]);
 
   const isAtMaxStage = useMemo(
-    () => activeSpriteKey === getMaxStageKey(cat),
-    [activeSpriteKey, cat]
+    () => activeSpriteKey === getMaxStageKey(activeCat),
+    [activeSpriteKey, activeCat]
   );
 
   const autoClickBoosts = useMemo(
@@ -112,6 +118,27 @@ export function useGame({ cat, boosts }: UseGameProps) {
     }
   }, []);
 
+  const selectCat = useCallback(
+    (catId: string) => {
+      if (catId === state.selectedCatId) return;
+      const newCat = getCatById(catId);
+      if (!newCat) return;
+
+      if (
+        typeof window !== "undefined" &&
+        window.confirm(
+          `Switch to ${newCat.name}? This will reset your progress.`
+        )
+      ) {
+        setState({
+          ...DEFAULT_STATE,
+          selectedCatId: catId,
+        });
+      }
+    },
+    [state.selectedCatId]
+  );
+
   // Debug: add pets directly (for development only)
   const addPets = useCallback((amount: number) => {
     setState((prev) => applyClick(prev, amount));
@@ -131,6 +158,8 @@ export function useGame({ cat, boosts }: UseGameProps) {
 
   return {
     state,
+    activeCat,
+    selectedCatId: state.selectedCatId,
     petsPerClick,
     petsPerSecond,
     activeSpriteKey,
@@ -139,6 +168,7 @@ export function useGame({ cat, boosts }: UseGameProps) {
     tapCat,
     buy,
     reset,
+    selectCat,
     addPets,
     mounted,
   };
